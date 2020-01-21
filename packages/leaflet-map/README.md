@@ -47,7 +47,8 @@ You can change layers by using the input `layers` and model `MapLayer`
 
 ```html
 <itkyo-leaflet-map
-    [markers]="markers" >
+    [markers]="markers"
+    [layers]="layers"  >
 </itkyo-leaflet-map>
 ```
 

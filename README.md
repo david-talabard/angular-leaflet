@@ -20,9 +20,9 @@ Run `npm install -g @angular/cli` to install angular CLI globally
 
 Warnings: this package is not published on NPM yet.
 
-| Name              | NPM repository         |  Module       
-| ----------------- | ---------------------- | ------------
-| map               | `@itkyo/leaflet-map`   | MapModule
+| Name              | NPM repository         |  Module       |   Doc
+| ----------------- | ---------------------- | ------------  | ----------
+| map               | `@itkyo/leaflet-map`   | MapModule     | https://github.com/david-talabard/angular-leaflet/tree/master/packages/leaflet-map
 
 ## Installation
 
