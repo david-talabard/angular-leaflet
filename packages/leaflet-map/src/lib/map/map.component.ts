@@ -1,7 +1,7 @@
 
 
-import { Component, AfterViewInit, Input, IterableDiffers, IterableDiffer, DoCheck, OnInit } from '@angular/core';
-import { tileLayer, marker, map, control, Map, TileLayer, divIcon, DivIcon, Marker } from 'leaflet';
+import { Component, AfterViewInit, Input, IterableDiffers, IterableDiffer, DoCheck } from '@angular/core';
+import { tileLayer, marker, map, control, Map, TileLayer, divIcon, DivIcon, Marker, featureGroup } from 'leaflet';
 import { MapMarker, MapLayer } from './map.model';
 
 @Component({
@@ -82,32 +82,21 @@ export class MapComponent implements AfterViewInit, DoCheck {
 
   /**
    * Update markers
-   * Marker can be grouped with heatmap
-   * @see heatmaps input
    * @see markers input
    */
   private updateMarkers() {
     let bounds = [];
-    this.markers.map((m: MapMarker) => {
+    const markers = this.markers.map((m: MapMarker) => {
       if (m.latitude && m.longitude) {
-        bounds[0] = !bounds[0] || m.latitude < bounds[0] ? m.latitude - 0.25 : bounds[0];
-        bounds[1] = !bounds[1] || m.longitude < bounds[1] ? m.longitude - 0.25 : bounds[1];
-        bounds[2] = !bounds[2] || m.latitude > bounds[2] ? m.latitude + 0.25 : bounds[2];
-        bounds[3] = !bounds[3] || m.longitude > bounds[3] ? m.longitude + 0.25 : bounds[3];
-
         if (m.info) {
-          marker([m.latitude, m.longitude], { icon: this.getIcon(m.color) }).bindPopup(m.info).addTo(this.map);
-        } else {
-          marker([m.latitude, m.longitude], { icon: this.getIcon(m.color) }).addTo(this.map);
+          return marker([m.latitude, m.longitude], { icon: this.getIcon(m.color) }).bindPopup(m.info).addTo(this.map);
         }
+        return marker([m.latitude, m.longitude], { icon: this.getIcon(m.color) }).addTo(this.map);
       }
     });
 
     if (bounds.length) {
-      this.map.fitBounds([
-        [bounds[0], bounds[1]],
-        [bounds[2], bounds[3]]
-      ]);
+      this.map.fitBounds(featureGroup(markers).getBounds());
     }
 
   }
