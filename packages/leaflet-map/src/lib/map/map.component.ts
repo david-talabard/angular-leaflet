@@ -53,6 +53,10 @@ export class MapComponent implements AfterViewInit, DoCheck {
   ngDoCheck() {
     let changes = this.differ.diff(this.markers);
     if (changes && this.map) {
+      this.map.eachLayer((layer) => {
+        if (layer._latlng)
+          this.map.removeLayer(layer);
+      });
       this.updateMarkers();
     }
   }
